@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Hackeo</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .line {
+      margin: 5px 0;
+      white-space: pre-wrap;
+    }
+    #output {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .blinker {
+      display: inline-block;
+      width: 10px;
+      height: 1em;
+      background: lime;
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="output"></div>
+  <span class="blinker"></span>
+
+  <script>
+    const lines = [
+      "[+] Conectando a la red secreta...",
+      "[+] IP localizada: 192.168.69.42",
+      "[+] Iniciando escaneo de puertos...",
+      "[*] Puerto 22 (SSH) - ABIERTO",
+      "[*] Puerto 80 (HTTP) - ABIERTO",
+      "[*] Puerto 443 (HTTPS) - ABIERTO",
+      "[+] Descargando archivos confidenciales...",
+      "[+] Datos obtenidos: passwords.txt",
+      "[!] ALERTA: Intrusión detectada",
+      "[X] Expulsando rastreadores...",
+      "[✓] Sistema comprometido con éxito.",
+      "[✓] ¡Hackeo completado con éxito!",
+      "[*] Cerrando sesión..."
+    ];
+
+    const output = document.getElementById("output");
+    let i = 0;
+
+    function printNextLine() {
+      if (i < lines.length) {
+        const line = document.createElement("div");
+        line.className = "line";
+        line.textContent = lines[i];
+        output.appendChild(line);
+        output.scrollTop = output.scrollHeight;
+        i++;
+        setTimeout(printNextLine, 1000);
+      } else {
+        // Esperar 2 segundos y luego mostrar "apagado"
+        setTimeout(simularApagado, 2000);
+      }
+    }
+
+    function simularApagado() {
+      document.body.style.backgroundColor = "black";
+      output.innerHTML = "";
+      const apagado = document.createElement("div");
+      apagado.className = "line";
+      apagado.style.color = "red";
+      apagado.style.fontWeight = "bold";
+      apagado.style.fontSize = "1.5em";
+      apagado.textContent = "SISTEMA APAGADO.";
+      output.appendChild(apagado);
+
+      // Oculta el cursor parpadeante
+      const blinker = document.querySelector('.blinker');
+      if (blinker) blinker.style.display = 'none';
+    }
+
+    printNextLine();
+  </script>
+</body>
+</html>
